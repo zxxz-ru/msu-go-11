@@ -6,7 +6,8 @@ import (
 
 func TestGet_digits(t *testing.T) {
 	s := []struct {
-		i, n int
+		i int
+        n int
 		res  string
 	}{
 		// ones
@@ -29,7 +30,6 @@ func TestGet_digits(t *testing.T) {
 		{7, 10, "LXX"},
 		{8, 10, "LXXX"},
 		{9, 10, "XC"},
-		// {10,""},
 		// hundreds
 		{1, 100, "C"},
 		{2, 100, "CC"},
@@ -47,10 +47,7 @@ func TestGet_digits(t *testing.T) {
 	}
 
 	for _, c := range s {
-		r, err := get_digits(c.i, c.n)
-		if err != nil {
-			t.Errorf("func responded with error: %v", err)
-		}
+		r:= get_digits(c.i, c.n)
 		if r != c.res {
 			t.Errorf("expect %s, got %s", c.res, r)
 		}

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 )
 
@@ -29,12 +28,7 @@ type memoizeFunction func(int, ...int) interface{}
 // return arg i multiply on arg n as string in Roman digits
 // arg i is number of ones or tens, or hundreds
 // n flag to signal what is it must be [1, 10, 100, 1000]
-func get_digits(i, n int) (res string, err error) {
-	if i >= 10 {
-		err = errors.New("get_digits: arg i is bigger or equal to 10")
-		return "", err
-	}
-
+func get_digits(i, n int) (res string) {
 	switch {
 	case i < 4:
 		for i > 0 {
@@ -55,9 +49,35 @@ func get_digits(i, n int) (res string, err error) {
 	case i == 9:
 		res += romans[(9 * n)]
 	}
-
-	return res, nil
 	return
+}
+
+func getRoman(i int) (res string) {
+    switch {
+    case i >= 1000:
+    th := int(i/1000)
+    i = i - (1000 * th)
+    res += get_digits(th, 1000)
+    //fmt.Println(res)
+    res += getRoman(i)
+case i >= 100:
+    hrd := int(i/100)
+    i = i - (100 * hrd)
+    res += get_digits(hrd, 100)
+    //fmt.Println(res)
+    res += getRoman(i)
+
+case i >= 10:
+    tns := int(i/10)
+    i = i - (10 * tns)
+    res += get_digits(tns, 10)
+    //fmt.Println(res)
+    res += getRoman(i)
+case i < 10:
+    res += get_digits(i, 1)
+    //fmt.Println(res)
+}
+return
 }
 
 // TODO реализовать
@@ -76,11 +96,15 @@ func init() {
 
 func main() {
 	// 	fmt.Println("Fibonacci(45) =", fibonacci(45).(int))
+    /*
 	for _, x := range []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
 		14, 15, 16, 17, 18, 19, 20, 25, 30, 40, 50, 60, 69, 70, 80,
 		90, 99, 100, 200, 300, 400, 500, 600, 666, 700, 800, 900,
 		1000, 1009, 1444, 1666, 1945, 1997, 1999, 2000, 2008, 2010,
 		2012, 2500, 3000, 3999} {
 		fmt.Printf("%4d = %s\n", x, romanForDecimal(x).(string))
-	}
+    }
+	*/
+
+fmt.Println(getRoman(1975))
 }
