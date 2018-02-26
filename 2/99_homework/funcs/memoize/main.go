@@ -2,6 +2,9 @@ package main
 
 import (
 	"fmt"
+    "os"
+    "strconv"
+    "strings"
 )
 // TODO write test for getRomams
 // TODO remake getRomans as a for loop and string conversion
@@ -34,7 +37,25 @@ type memoizeFunction func(int, ...int) interface{}
 // return arg i multiply on arg n as string in Roman digits
 // arg i is number of ones or tens, or hundreds
 // n flag to signal what is it must be [1, 10, 100, 1000]
-func get_digits(i, n int) (res string) {
+func getRoman(i int) ( string) {
+    str := strconv.Itoa(i)
+    n := 1
+    length := len(str)
+    slc := make([]string, length, length)
+    for i := length - 1; i >= 0; i-- {
+        d, err := strconv.Atoi(string(str[i]))
+        if err != nil {
+fmt.Println(err)
+os.Exit(1)
+        }
+        s := getDigits(d, n)
+        n *= 10
+        slc[i] = s
+    }
+    return strings.Join(slc,"")
+}
+
+func getDigits(i, n int) (res string) {
 	switch {
 	case i < 4:
 		for i > 0 {
@@ -58,33 +79,33 @@ func get_digits(i, n int) (res string) {
 	return
 }
 
-func getRoman(i int) (res string) {
-	switch {
-	case i >= 1000:
-		th := int(i / 1000)
-		i = i - (1000 * th)
-		res += get_digits(th, 1000)
-		//fmt.Println(res)
-		res += getRoman(i)
-	case i >= 100:
-		hrd := int(i / 100)
-		i = i - (100 * hrd)
-		res += get_digits(hrd, 100)
-		//fmt.Println(res)
-		res += getRoman(i)
-
-	case i >= 10:
-		tns := int(i / 10)
-		i = i - (10 * tns)
-		res += get_digits(tns, 10)
-		//fmt.Println(res)
-		res += getRoman(i)
-	case i < 10:
-		res += get_digits(i, 1)
-		//fmt.Println(res)
-	}
-	return
-}
+// func getRoman(i int) (res string) {
+// 	switch {
+// 	case i >= 1000:
+// 		th := int(i / 1000)
+// 		i = i - (1000 * th)
+// 		res += get_digits(th, 1000)
+// 		//fmt.Println(res)
+// 		res += getRoman(i)
+// 	case i >= 100:
+// 		hrd := int(i / 100)
+// 		i = i - (100 * hrd)
+// 		res += get_digits(hrd, 100)
+// 		//fmt.Println(res)
+// 		res += getRoman(i)
+// 
+// 	case i >= 10:
+// 		tns := int(i / 10)
+// 		i = i - (10 * tns)
+// 		res += get_digits(tns, 10)
+// 		//fmt.Println(res)
+// 		res += getRoman(i)
+// 	case i < 10:
+// 		res += get_digits(i, 1)
+// 		//fmt.Println(res)
+// 	}
+// 	return
+// }
 
 // TODO реализовать
 // var fibonacci memoizeFunction
