@@ -7,7 +7,6 @@ import (
     "strings"
 )
 // TODO write test for getRomams
-// TODO remake getRomans as a for loop and string conversion
 // vars
 var romans map[int]string
 
@@ -78,34 +77,6 @@ func getDigits(i, n int) (res string) {
 	}
 	return
 }
-
-// func getRoman(i int) (res string) {
-// 	switch {
-// 	case i >= 1000:
-// 		th := int(i / 1000)
-// 		i = i - (1000 * th)
-// 		res += get_digits(th, 1000)
-// 		//fmt.Println(res)
-// 		res += getRoman(i)
-// 	case i >= 100:
-// 		hrd := int(i / 100)
-// 		i = i - (100 * hrd)
-// 		res += get_digits(hrd, 100)
-// 		//fmt.Println(res)
-// 		res += getRoman(i)
-// 
-// 	case i >= 10:
-// 		tns := int(i / 10)
-// 		i = i - (10 * tns)
-// 		res += get_digits(tns, 10)
-// 		//fmt.Println(res)
-// 		res += getRoman(i)
-// 	case i < 10:
-// 		res += get_digits(i, 1)
-// 		//fmt.Println(res)
-// 	}
-// 	return
-// }
 
 // TODO реализовать
 // var fibonacci memoizeFunction
