@@ -6,9 +6,9 @@ import (
 
 func TestGetDigits(t *testing.T) {
 	s := []struct {
-		i int
-        n int
-		res  string
+		i   int
+		n   int
+		res string
 	}{
 		// ones
 		{1, 1, "I"},
@@ -47,7 +47,7 @@ func TestGetDigits(t *testing.T) {
 	}
 
 	for _, c := range s {
-		r:= getDigits(c.i, c.n)
+		r := getDigits(c.i, c.n)
 		if r != c.res {
 			t.Errorf("expect %s, got %s", c.res, r)
 		}
@@ -56,27 +56,27 @@ func TestGetDigits(t *testing.T) {
 
 func TestGetRoman(t *testing.T) {
 
-		tt := []struct{
-         i int
-         res string
-        }{
-            {1, "I"}, {2, "II"},{3, "III"},{4, "IV"},{5, "V"},{6, "VI"},
-            {7, "VII"},{8, "VIII"},{9, "IX"},{10, "X"},{11, "XI"},
-            {12, "XII"},{13, "XIII"}, {14, "XIV"},{15, "XV"},{16, "XVI"},
-            {17, "XVII"},{18, "XVIII"},{19, "XIX"},{20, "XX"},{25, "XXV"},
-            {30, "XXX"},{40, "XL"},{50, "L"},{60, "LX"},{69, "LXIX"},
-            {70, "LXX"},{80, "LXXX"}, {90, "XC"},{99, "XCIX"},{100, "C"},
-            {200, "CC"},{300, "CCC"},{400, "CD"},{500, "D"},{600, "DC"},
-            {666, "DCLXVI"},{700, "DCC"},{800, "DCCC"},{900, "CM"},
-            {1000, "M"},{1009, "MIX"},{1444, "MCDXLIV"},{1666, "MDCLXVI"},
-            {1945, "MCMXLV"},{1997, "MCMXCVII"},{1999, "MCMXCIX"},
-            {2000, "MM"},{2008, "MMVIII"},{2010, "MMX"}, {2012, "MMXII"},
-            {2500, "MMD"},{3000, "MMM"},{3999, "MMMCMXCIX"}}
-            for _, tc := range tt {
+	tt := []struct {
+		i   int
+		res string
+	}{
+		{1, "I"}, {2, "II"}, {3, "III"}, {4, "IV"}, {5, "V"}, {6, "VI"},
+		{7, "VII"}, {8, "VIII"}, {9, "IX"}, {10, "X"}, {11, "XI"},
+		{12, "XII"}, {13, "XIII"}, {14, "XIV"}, {15, "XV"}, {16, "XVI"},
+		{17, "XVII"}, {18, "XVIII"}, {19, "XIX"}, {20, "XX"}, {25, "XXV"},
+		{30, "XXX"}, {40, "XL"}, {50, "L"}, {60, "LX"}, {69, "LXIX"},
+		{70, "LXX"}, {80, "LXXX"}, {90, "XC"}, {99, "XCIX"}, {100, "C"},
+		{200, "CC"}, {300, "CCC"}, {400, "CD"}, {500, "D"}, {600, "DC"},
+		{666, "DCLXVI"}, {700, "DCC"}, {800, "DCCC"}, {900, "CM"},
+		{1000, "M"}, {1009, "MIX"}, {1444, "MCDXLIV"}, {1666, "MDCLXVI"},
+		{1945, "MCMXLV"}, {1997, "MCMXCVII"}, {1999, "MCMXCIX"},
+		{2000, "MM"}, {2008, "MMVIII"}, {2010, "MMX"}, {2012, "MMXII"},
+		{2500, "MMD"}, {3000, "MMM"}, {3999, "MMMCMXCIX"}}
+	for _, tc := range tt {
 
-		r:= getRoman(tc.i)
+		r := getRoman(tc.i)
 		if r != tc.res {
 			t.Errorf("expect %s, got %s", tc.res, r)
 		}
-            }
+	}
 }

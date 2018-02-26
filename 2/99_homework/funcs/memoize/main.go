@@ -2,13 +2,18 @@ package main
 
 import (
 	"fmt"
-    "os"
-    "strconv"
-    "strings"
+	"os"
+	"strconv"
+	"strings"
 )
-// TODO write test for getRomams
+
+type memoizeFunction func(int) string
+
 // vars
 var romans map[int]string
+
+// var fibonacci memoizeFunction
+var romanForDecimal memoizeFunction
 
 func getMap() map[int]string {
 	return map[int]string{
@@ -28,30 +33,25 @@ func getMap() map[int]string {
 	}
 }
 
-var cache map[int]int = make(map[int]int)
-
-// ...int slice of keys?
-type memoizeFunction func(int, ...int) interface{}
-
 // return arg i multiply on arg n as string in Roman digits
 // arg i is number of ones or tens, or hundreds
 // n flag to signal what is it must be [1, 10, 100, 1000]
-func getRoman(i int) ( string) {
-    str := strconv.Itoa(i)
-    n := 1
-    length := len(str)
-    slc := make([]string, length, length)
-    for i := length - 1; i >= 0; i-- {
-        d, err := strconv.Atoi(string(str[i]))
-        if err != nil {
-fmt.Println(err)
-os.Exit(1)
-        }
-        s := getDigits(d, n)
-        n *= 10
-        slc[i] = s
-    }
-    return strings.Join(slc,"")
+func getRoman(i int) string {
+	str := strconv.Itoa(i)
+	n := 1
+	length := len(str)
+	slc := make([]string, length, length)
+	for i := length - 1; i >= 0; i-- {
+		d, err := strconv.Atoi(string(str[i]))
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		s := getDigits(d, n)
+		n *= 10
+		slc[i] = s
+	}
+	return strings.Join(slc, "")
 }
 
 func getDigits(i, n int) (res string) {
@@ -78,32 +78,42 @@ func getDigits(i, n int) (res string) {
 	return
 }
 
-// TODO реализовать
-// var fibonacci memoizeFunction
-var romanForDecimal memoizeFunction
-
 //TODO Write memoization function
 
+// ...int slice of keys?
+
 func memoize(function memoizeFunction) memoizeFunction {
-	return function
+	var cache map[int]string = make(map[int]string)
+	f := func(i int) (res string) {
+		if r, ok := cache[i]; ok {
+			res = r
+		} else {
+			r := function(i)
+			cache[i] = r
+			res = r
+		}
+		return
+	}
+	return f
 }
 
 // TODO обернуть функции fibonacci и roman в memoize
 func init() {
 	romans = getMap()
+	romanForDecimal = memoize(getRoman)
 }
 
 func main() {
 	// 	fmt.Println("Fibonacci(45) =", fibonacci(45).(int))
-	/*
-		for _, x := range []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
-			14, 15, 16, 17, 18, 19, 20, 25, 30, 40, 50, 60, 69, 70, 80,
-			90, 99, 100, 200, 300, 400, 500, 600, 666, 700, 800, 900,
-			1000, 1009, 1444, 1666, 1945, 1997, 1999, 2000, 2008, 2010,
-			2012, 2500, 3000, 3999} {
-			fmt.Printf("%4d = %s\n", x, romanForDecimal(x).(string))
-	    }
-	*/
-
-	fmt.Println(getRoman(1975))
+	for _, x := range []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+		/*
+		    14, 15, 16, 17, 18, 19, 20, 25, 30, 40, 50, 60, 69, 70, 80,
+				90, 99, 100, 200, 300, 400, 500, 600, 666, 700, 800, 900,
+				1000, 1009, 1444, 1666, 1945, 1997, 1999, 2000, 2008, 2010,
+				2012, 2500, 3000, 3999
+		*/
+	} {
+		fmt.Printf("%4d = %s\n", x, romanForDecimal(x))
+	}
 }
