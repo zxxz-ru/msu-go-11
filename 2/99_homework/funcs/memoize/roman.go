@@ -7,11 +7,11 @@ import (
 	"strings"
 )
 
-// vars
-var(
-    romans map[int]string = getMap()
+var (
+	romans map[int]string = getMap()
 )
 
+// always will return constant map of int keys to Roman digit.
 func getMap() map[int]string {
 	return map[int]string{
 		1:    "I",
@@ -30,11 +30,9 @@ func getMap() map[int]string {
 	}
 }
 
-// return arg i multiply on arg n as string in Roman digits
-// arg i is number of ones or tens, or hundreds
-// n flag to signal what is it must be [1, 10, 100, 1000]
-
-    func GetRoman (i int) interface{} {
+// Convert integer less than 4000 to Roman digits.
+// does not check for negative and zero.
+func getRoman(i int) interface{} {
 	str := strconv.Itoa(i)
 	n := 1
 	length := len(str)
@@ -49,12 +47,17 @@ func getMap() map[int]string {
 		n *= 10
 		slc[i] = s
 	}
-    resultStr := strings.Join(slc, "")
+	resultStr := strings.Join(slc, "")
 	var itr interface{} = resultStr
 
 	return itr
 }
 
+// return roman representation of arabic digit
+// first argument is a digit to convert, second
+// argument must be either 1, 10, 100, 1000.
+// For example pass 5, 10 func will convert 50.
+// Pass 5, 1 func will convert 5.
 func getDigits(i, n int) (res string) {
 	switch {
 	case i < 4:
