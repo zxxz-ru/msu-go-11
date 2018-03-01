@@ -26,10 +26,8 @@ func main() {
 		pi:      3.141592,
 	}
 
-	e3 := example{}
 
 	// Display the field values.
-	fmt.Println("Flag", e2.Flag)
-	fmt.Println("Counter", e2.counter)
-	fmt.Println("Pi", e2.pi)
+	fmt.Printf("Flag %t\ncounter %d\npi %f\n", e2.Flag, e2.counter, e2.pi)
+
 }
